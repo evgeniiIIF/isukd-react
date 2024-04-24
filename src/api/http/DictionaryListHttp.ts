@@ -19,14 +19,14 @@ export interface DictionaryListItem {
 const BASE_URL = '/api/v1/Dictionaries/all';
 
 export class DictionaryListHttp {
-  static async getAll(pageIndex = 1, pageSize = 3): Promise<AxiosResponse<DictionaryList>> {
+  static async getAll(): Promise<AxiosResponse<DictionaryList>> {
+    // static async getAll(pageIndex = 1, pageSize = 5): Promise<AxiosResponse<DictionaryList>> {
     const response: AxiosResponse<any> = await axiosInstance.get(`${BASE_URL}`, {
-      params: {
-        pageIndex,
-        pageSize,
-      },
+      // params: {
+      //   pageIndex,
+      //   pageSize,
+      // },
     });
-    console.log(response);
 
     return response;
   }

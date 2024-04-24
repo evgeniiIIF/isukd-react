@@ -9,18 +9,6 @@ import BasicTable from './table';
 export interface IDictionaryListProps {}
 
 export const DictionaryList: FC = (props: IDictionaryListProps) => {
-  const { dictionaryListItems, isLoading, error } = useAppSelector(selectDictionaryList);
-
-  const [items, setItems] = useState([]);
-
-  const { getDictionaryList } = useActions();
-
-  useEffect(() => {
-    getDictionaryList();
-  }, []);
-
-  console.log(dictionaryListItems);
-
   return (
     <div>
       <BasicTable />

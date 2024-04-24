@@ -20,7 +20,7 @@ const BASE_URL = '/api/v1/Dictionaries/all';
 
 export class DictionaryListHttp {
   static async getAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<DictionaryList>> {
-    const response: AxiosResponse<any> = await axiosInstance.get(`${BASE_URL}`, {
+    const response: AxiosResponse<DictionaryList> = await axiosInstance.get(`${BASE_URL}`, {
       params: {
         pageIndex,
         pageSize,

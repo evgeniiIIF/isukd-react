@@ -31,9 +31,7 @@ export const DictionaryList: FC = () => {
       {
         accessorKey: 'dictionaryTitle',
         header: 'Наименование',
-        Cell: ({ renderedCellValue, row }) => (
-          <Link to={`/dictionaries/${row.original.dictionaryId}`}>{renderedCellValue}</Link>
-        ),
+        Cell: ({ renderedCellValue, row }) => <Link to={`${row.original.dictionaryId}`}>{renderedCellValue}</Link>,
       },
     ],
     []

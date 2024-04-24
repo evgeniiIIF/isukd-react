@@ -11,63 +11,75 @@ import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
 // import { selectDictionaryItemPage } from '../../store/Dictionary/reducer';
 import { Link, useParams } from 'react-router-dom';
+import { selectDictionaryItemPage } from '../../store/DictionaryItemPage/reducer';
 
 export interface IDictionaryItemPageProps {}
 
 export const DictionaryItemPage: FC = () => {
   const { dictionaryId } = useParams();
-  // const { DictionaryItemPageItems, isLoading, error, meta } = useAppSelector(selectDictionaryItemPage);
+  const { fields, isLoading, error } = useAppSelector(selectDictionaryItemPage);
+  console.log(fields);
 
-  // const [pagination, setPagination] = useState<MRT_PaginationState>({
-  //   pageIndex: 0,
-  //   pageSize: 10,
-  // });
+  const [pagination, setPagination] = useState<MRT_PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  });
 
-  // const { getDictionaryItemPage } = useActions();
+  const { getDictionaryItemPage } = useActions();
+  useEffect(() => {
+    getDictionaryItemPage(dictionaryId);
+  }, []);
 
-  // useEffect(() => {
-  //   getDictionaryItemPage(pagination.pageIndex + 1, pagination.pageSize);
-  // }, [pagination.pageIndex, pagination.pageSize]);
+  const columns = useMemo<MRT_ColumnDef<any>[]>(
+    () => [
+      ...fields
+        .filter((item) => {
+          return !item.hidden;
+        })
+        .map((item) => {
+          return {
+            accessorKey: item.internalName,
+            header: item.title,
+            Cell: ({ renderedCellValue, row }: any) => (
+              <Link key={item.title} to={`/profile/${row.original.dictionaryId}`}>
+                {renderedCellValue}
+              </Link>
+            ),
+          };
+        }),
+    ],
+    [fields]
+  );
 
-  // const columns = useMemo<MRT_ColumnDef<any>[]>(
-  //   () => [
-  //     {
-  //       accessorKey: 'dictionaryTitle',
-  //       header: 'Наименование',
-  //       Cell: ({ renderedCellValue, row }) => (
-  //         <Link to={`/profile/${row.original.dictionaryId}`}>{renderedCellValue}</Link>
-  //       ),
-  //     },
-  //   ],
-  //   []
-  // );
+  const table = useMaterialReactTable({
+    columns,
+    data: fields,
+    manualFiltering: true,
+    manualPagination: true,
+    manualSorting: true,
+    enableColumnActions: false,
+    state: {
+      isLoading,
+      pagination,
+    },
+    muiPaginationProps: {
+      rowsPerPageOptions: [5, 10, 20],
+      showFirstButton: false,
+      showLastButton: false,
+    },
+    paginationDisplayMode: 'pages',
+    rowCount: 5,
 
-  // const table = useMaterialReactTable({
-  //   columns,
-  //   data: DictionaryItemPageItems,
-  //   manualFiltering: true,
-  //   manualPagination: true,
-  //   manualSorting: true,
-  //   enableColumnActions: false,
-  //   state: {
-  //     isLoading,
-  //     pagination,
-  //   },
-  //   muiPaginationProps: {
-  //     rowsPerPageOptions: [5, 10, 20],
-  //     showFirstButton: false,
-  //     showLastButton: false,
-  //   },
-  //   paginationDisplayMode: 'pages',
-  //   rowCount: meta.totalCount,
+    onPaginationChange: setPagination,
+  });
 
-  //   onPaginationChange: setPagination,
-  // });
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+  if (isLoading) {
+    return <h1>...Loading</h1>;
+  }
 
-  // if (error) {
-  //   return <h1>{error}</h1>;
-  // }
-
-  // return <MaterialReactTable table={table} />;
-  return <h1> `DictionaryItemPage {dictionaryId}` </h1>;
+  return <MaterialReactTable table={table} />;
+  // return <h1> `DictionaryItemPage {dictionaryId}` </h1>;
 };

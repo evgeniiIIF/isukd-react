@@ -94,11 +94,11 @@ export class DictionaryItemPageHttp {
     return response;
   }
 
-  // static async getDictionaryItemPageItems(dictionaryId: any): Promise<AxiosResponse<IDictionaryItemPageItems>> {
-  //   const response: AxiosResponse<IDictionaryItemPageItems> = await axiosInstance.get(
-  //     `${BASE_URL}/${dictionaryId}/items`,
-  //     {}
-  //   );
-  //   return response;
-  // }
+  static async getDictionaryItemPageItems(dictionaryId: any): Promise<AxiosResponse<IDictionaryItemPageItems>> {
+    const response: AxiosResponse<IDictionaryItemPageItems> = await axiosInstance.get(
+      `${BASE_URL}/${dictionaryId}/items`,
+      {}
+    );
+    return response;
+  }
 }

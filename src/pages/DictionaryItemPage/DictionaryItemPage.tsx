@@ -17,17 +17,18 @@ export interface IDictionaryItemPageProps {}
 
 export const DictionaryItemPage: FC = () => {
   const { dictionaryId } = useParams();
-  const { fields, isLoading, error } = useAppSelector(selectDictionaryItemPage);
-  console.log(fields);
+  const { items, fields, isLoading, error } = useAppSelector(selectDictionaryItemPage);
+  console.log(items, fields);
 
   const [pagination, setPagination] = useState<MRT_PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const { getDictionaryItemPage } = useActions();
+  const { getDictionaryItemPage, getDictionaryItemPageItems } = useActions();
   useEffect(() => {
     getDictionaryItemPage(dictionaryId);
+    getDictionaryItemPageItems(dictionaryId);
   }, []);
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
@@ -51,9 +52,18 @@ export const DictionaryItemPage: FC = () => {
     [fields]
   );
 
+  const data = useMemo<any>(
+    () => [
+      ...items.map((item) => {
+        return item.fields;
+      }),
+    ],
+    [items]
+  );
+
   const table = useMaterialReactTable({
     columns,
-    data: fields,
+    data: data,
     manualFiltering: true,
     manualPagination: true,
     manualSorting: true,
@@ -63,12 +73,12 @@ export const DictionaryItemPage: FC = () => {
       pagination,
     },
     muiPaginationProps: {
-      rowsPerPageOptions: [5, 10, 20],
+      rowsPerPageOptions: [2, 3, 10],
       showFirstButton: false,
       showLastButton: false,
     },
     paginationDisplayMode: 'pages',
-    rowCount: 5,
+    rowCount: 20,
 
     onPaginationChange: setPagination,
   });

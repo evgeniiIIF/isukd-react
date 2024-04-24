@@ -1,33 +1,19 @@
-import { Outlet, createBrowserRouter } from 'react-router-dom';
-import App from './App';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 import { DictionaryList } from './modules/DictionaryList/DictionaryList';
+import { DictionaryItemPage } from './pages/DictionaryItemPage/DictionaryItemPage';
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    loader: () => redirect('/dictionaries'),
+  },
+  {
+    path: '/dictionaries',
     element: <DictionaryList />,
   },
   {
-    path: 'about',
-    element: (
-      <h1>
-        About par <Outlet />
-      </h1>
-    ),
-    children: [
-      {
-        path: 'child',
-        element: <h3>About Child </h3>,
-      },
-      // {
-      //   path: ':projectId/:taskId', // Определите параметры в пути
-      //   element: <AboutPage />,
-      //   loader: async ({ params }) => {
-      //     const { projectId, taskId } = params;
-      //     return fetch(`/api/posts/${projectId}/${taskId}`);
-      //   },
-      // },
-    ],
+    path: '/dictionaries/:dictionaryId',
+    element: <DictionaryItemPage />,
   },
 
   {

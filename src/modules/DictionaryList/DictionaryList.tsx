@@ -6,27 +6,27 @@ import {
   type MRT_ColumnDef,
   type MRT_PaginationState,
 } from 'material-react-table';
-import { DictionaryListItem } from '../../api/http/DictionaryListHttp';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { selectDictionaryList } from '../../store/DictionaryList/reducer';
+import { selectDictionaryAll } from '../../store/DictionaryAll/reducer';
 import { Link } from 'react-router-dom';
+import { DictionaryAllItem } from '../../api/http/DictionaryAllHttp';
 
-export interface IDictionaryListProps {}
+export interface IDictionaryAllProps {}
 
-export const DictionaryList: FC = () => {
-  const { dictionaryListItems, isLoading, error, meta } = useAppSelector(selectDictionaryList);
+export const DictionaryAll: FC = () => {
+  const { dictionaryListItems, isLoading, error, meta } = useAppSelector(selectDictionaryAll);
   const [pagination, setPagination] = useState<MRT_PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
 
-  const { getDictionaryList } = useActions();
+  const { getDictionaryAll } = useActions();
   useEffect(() => {
-    getDictionaryList(pagination.pageIndex + 1, pagination.pageSize);
+    getDictionaryAll(pagination.pageIndex + 1, pagination.pageSize);
   }, [pagination.pageIndex, pagination.pageSize]);
 
-  const columns = useMemo<MRT_ColumnDef<DictionaryListItem>[]>(
+  const columns = useMemo<MRT_ColumnDef<DictionaryAllItem>[]>(
     () => [
       {
         accessorKey: 'dictionaryTitle',

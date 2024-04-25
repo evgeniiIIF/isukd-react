@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { DictionaryListItem } from '../../api/http/DictionaryListHttp';
+import { DictionaryAllItem } from '../../api/http/DictionaryAllHttp';
 import { RootState } from '..';
 
 export interface Meta {
@@ -11,28 +11,28 @@ export interface Meta {
   totalPages: number;
 }
 
-export interface DictionaryListState {
+export interface DictionaryAllState {
   meta: Meta;
-  dictionaryListItems: DictionaryListItem[];
+  dictionaryListItems: DictionaryAllItem[];
   isLoading: boolean;
   error: string | null;
 }
 
-const initialState: DictionaryListState = {
+const initialState: DictionaryAllState = {
   meta: {} as Meta,
   dictionaryListItems: [],
   isLoading: false,
   error: null,
 };
 
-const dictionaryListSlice = createSlice({
-  name: 'dictionaryListState',
+const dictionaryAllSlice = createSlice({
+  name: 'dictionaryAllState',
   initialState,
   reducers: {
     setMeta(state, action) {
       state.meta = action.payload;
     },
-    setDictionaryListItems(state, action) {
+    setDictionaryAllItems(state, action) {
       state.dictionaryListItems = action.payload;
     },
     setIsLoading(state, action) {
@@ -44,6 +44,6 @@ const dictionaryListSlice = createSlice({
   },
 });
 
-export const selectDictionaryList = (state: RootState) => state.dictionaryListState;
-export const { setMeta, setDictionaryListItems, setIsLoading, setError } = dictionaryListSlice.actions;
-export const dictionaryListReducer = dictionaryListSlice.reducer;
+export const selectDictionaryAll = (state: RootState) => state.dictionaryAllState;
+export const { setMeta, setDictionaryAllItems, setIsLoading, setError } = dictionaryAllSlice.actions;
+export const dictionaryListReducer = dictionaryAllSlice.reducer;

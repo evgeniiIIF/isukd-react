@@ -1,6 +1,6 @@
 import { AppDispatch } from '..';
 import { DictionaryItemPageHttp } from '../../api/http/DictionaryItemPageHttp';
-// import { DictionaryListHttp } from '../../api/http/DictionaryListHttp';
+// import { DictionaryAllHttp } from '../../api/http/DictionaryAllHttp';
 import { setItems, setFields, setError, setIsLoading, setMeta } from './reducer';
 
 export const getDictionaryItemPage = (dictionaryId: any) => {

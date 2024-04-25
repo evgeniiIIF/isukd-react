@@ -1,7 +1,7 @@
 import { createBrowserRouter, redirect } from 'react-router-dom';
-import { DictionaryList } from './modules/DictionaryList/DictionaryList';
 import { DictionaryItemPage } from './pages/DictionaryItemPage/DictionaryItemPage';
 import { DefaultLayout } from './layouts/DefaultLayout';
+import { DictionaryAll } from './modules/DictionaryList/DictionaryList';
 
 export const router = createBrowserRouter([
   // {
@@ -10,12 +10,12 @@ export const router = createBrowserRouter([
   // },
   // {
   //   path: '/dictionaries',
-  //   element: <DictionaryList />,
+  //   element: <DictionaryAll />,
   // },
   // ++++++++++++++++++
   // {
   //   path: '/',
-  //   element: <DictionaryList />,
+  //   element: <DictionaryAll />,
   // },
   // {
   //   path: ':dictionaryId',
@@ -28,7 +28,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DictionaryList />,
+        element: <DictionaryAll />,
       },
       {
         path: ':dictionaryId',

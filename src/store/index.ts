@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { dictionaryListReducer } from './DictionaryList/reducer';
+import { dictionaryListReducer } from './DictionaryAll/reducer';
 import { dictionaryItemPageReducer } from './DictionaryItemPage/reducer';
 
 export const store = configureStore({
   reducer: {
-    dictionaryListState: dictionaryListReducer,
+    dictionaryAllState: dictionaryListReducer,
     dictionaryItemPageState: dictionaryItemPageReducer,
   },
 });

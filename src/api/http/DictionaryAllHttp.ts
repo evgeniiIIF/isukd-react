@@ -1,26 +1,26 @@
 import { AxiosResponse } from 'axios';
 import { axiosInstance } from './axios';
 
-export interface DictionaryList {
+export interface DictionaryAll {
   pageIndex: number;
   pageSize: number;
   totalCount: number;
   totalPages: number;
-  items: DictionaryListItem[];
+  items: DictionaryAllItem[];
   hasPreviousPage: boolean;
   hasNextPage: boolean;
 }
 
-export interface DictionaryListItem {
+export interface DictionaryAllItem {
   dictionaryTitle: string;
   dictionaryId: number;
 }
 
 const BASE_URL = '/api/v1/Dictionaries/all';
 
-export class DictionaryListHttp {
-  static async getAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<DictionaryList>> {
-    const response: AxiosResponse<DictionaryList> = await axiosInstance.get(`${BASE_URL}`, {
+export class DictionaryAllHttp {
+  static async getAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<DictionaryAll>> {
+    const response: AxiosResponse<DictionaryAll> = await axiosInstance.get(`${BASE_URL}`, {
       params: {
         pageIndex,
         pageSize,

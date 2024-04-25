@@ -1,10 +1,10 @@
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useAppDispatch } from './useAppDispatch';
-import { getDictionaryList } from '../store/DictionaryList/actions';
+import { getDictionaryAll } from '../store/DictionaryAll/actions';
 import { getDictionaryItemPage, getDictionaryItemPageItems } from '../store/DictionaryItemPage/actions';
 
 const createActions = {
-  getDictionaryList,
+  getDictionaryAll,
   getDictionaryItemPage,
   getDictionaryItemPageItems,
 };

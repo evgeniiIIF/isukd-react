@@ -7,6 +7,16 @@ export interface IDictionaryItemPage {
   fields: IField[];
   isLoading: boolean;
   error: string | null;
+  meta: Meta;
+}
+
+export interface Meta {
+  pageIndex: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
 }
 
 const initialState: IDictionaryItemPage = {
@@ -14,6 +24,7 @@ const initialState: IDictionaryItemPage = {
   fields: [],
   isLoading: false,
   error: null,
+  meta: {} as Meta,
 };
 
 const dictionaryItemPageSlice = createSlice({
@@ -32,9 +43,12 @@ const dictionaryItemPageSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+    setMeta(state, action) {
+      state.meta = action.payload;
+    },
   },
 });
 
 export const selectDictionaryItemPage = (state: RootState) => state.dictionaryItemPageState;
-export const { setItems, setFields, setIsLoading, setError } = dictionaryItemPageSlice.actions;
+export const { setItems, setFields, setIsLoading, setError, setMeta } = dictionaryItemPageSlice.actions;
 export const dictionaryItemPageReducer = dictionaryItemPageSlice.reducer;

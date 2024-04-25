@@ -1,4 +1,4 @@
-import { Dispatch, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import { Post } from '../api/http/PostsHttp';
 
@@ -28,29 +28,7 @@ const postsSlice = createSlice({
       state.error = action.payload;
     },
   },
-  // extraReducers(builder) {
-  //   builder
-  //     .addCase(fetchPosts.pending, (state, action) => {
-  //       state.status = 'loading';
-  //     })
-  //     .addCase(fetchPosts.fulfilled, (state, action) => {
-  //       state.status = 'succeeded';
-  //       console.log(state.status);
-
-  //       // Add any fetched posts to the array
-  //       state.postsItems = action.payload;
-  //     })
-  //     .addCase(fetchPosts.rejected, (state, action) => {
-  //       state.status = 'failed';
-  //       state.error = action.error.message;
-  //     });
-  // },
 });
-
-// export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
-//   const posts = await PostsHttp.getAll();
-//   return posts.data;
-// });
 
 export const selectPosts = (state: RootState) => state.posts;
 

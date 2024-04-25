@@ -6,10 +6,8 @@ import {
   type MRT_ColumnDef,
   type MRT_PaginationState,
 } from 'material-react-table';
-// import { DictionaryItemPageItem } from '../../api/http/DictionaryItemPageHttp';
 import { useActions } from '../../hooks/useActions';
 import { useAppSelector } from '../../hooks/useAppSelector';
-// import { selectDictionaryItemPage } from '../../store/Dictionary/reducer';
 import { Link, useParams } from 'react-router-dom';
 import { selectDictionaryItemPage } from '../../store/DictionaryItemPage/reducer';
 
@@ -17,19 +15,18 @@ export interface IDictionaryItemPageProps {}
 
 export const DictionaryItemPage: FC = () => {
   const { dictionaryId } = useParams();
-  const { items, fields, isLoading, error } = useAppSelector(selectDictionaryItemPage);
-  console.log(items, fields);
+  const { items, fields, isLoading, error, meta } = useAppSelector(selectDictionaryItemPage);
 
   const [pagination, setPagination] = useState<MRT_PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: 2,
   });
 
   const { getDictionaryItemPage, getDictionaryItemPageItems } = useActions();
   useEffect(() => {
     getDictionaryItemPage(dictionaryId);
-    getDictionaryItemPageItems(dictionaryId);
-  }, []);
+    getDictionaryItemPageItems(dictionaryId, pagination.pageIndex + 1, pagination.pageSize);
+  }, [pagination.pageIndex, pagination.pageSize]);
 
   const columns = useMemo<MRT_ColumnDef<any>[]>(
     () => [
@@ -37,15 +34,19 @@ export const DictionaryItemPage: FC = () => {
         .filter((item) => {
           return !item.hidden;
         })
-        .map((item) => {
+        .map((item, index) => {
           return {
             accessorKey: item.internalName,
             header: item.title,
-            Cell: ({ renderedCellValue, row }: any) => (
-              <Link key={item.title} to={`/profile/${row.original.dictionaryId}`}>
-                {renderedCellValue}
-              </Link>
-            ),
+            Cell: ({ renderedCellValue, row }: any) => {
+              return index === 0 ? (
+                <Link key={item.title} to={`/profile/${row.original.dictionaryId}`}>
+                  {renderedCellValue}
+                </Link>
+              ) : (
+                renderedCellValue
+              );
+            },
           };
         }),
     ],
@@ -78,7 +79,7 @@ export const DictionaryItemPage: FC = () => {
       showLastButton: false,
     },
     paginationDisplayMode: 'pages',
-    rowCount: 20,
+    rowCount: meta.totalCount,
 
     onPaginationChange: setPagination,
   });
@@ -91,5 +92,4 @@ export const DictionaryItemPage: FC = () => {
   }
 
   return <MaterialReactTable table={table} />;
-  // return <h1> `DictionaryItemPage {dictionaryId}` </h1>;
 };

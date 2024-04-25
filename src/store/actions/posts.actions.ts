@@ -14,12 +14,10 @@ export const getPosts = () => {
       dispatch(setIsLoading(true));
       const posts = await PostsHttp.getAll();
       dispatch(setPosts(posts.data));
-      console.log('try');
     } catch (err: any) {
       dispatch(setError(err.message));
     } finally {
       dispatch(setIsLoading(false));
-      console.log('fina');
     }
   };
 };

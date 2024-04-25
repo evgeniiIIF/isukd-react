@@ -1,7 +1,7 @@
 import { AppDispatch } from '..';
 import { DictionaryItemPageHttp } from '../../api/http/DictionaryItemPageHttp';
 // import { DictionaryListHttp } from '../../api/http/DictionaryListHttp';
-import { setItems, setFields, setError, setIsLoading } from './reducer';
+import { setItems, setFields, setError, setIsLoading, setMeta } from './reducer';
 
 export const getDictionaryItemPage = (dictionaryId: any) => {
   return async (dispatch: AppDispatch) => {
@@ -18,14 +18,15 @@ export const getDictionaryItemPage = (dictionaryId: any) => {
   };
 };
 
-export const getDictionaryItemPageItems = (dictionaryId: any) => {
+export const getDictionaryItemPageItems = (dictionaryId: any, pageIndex: number, pageSize: number) => {
   return async (dispatch: AppDispatch) => {
     try {
       dispatch(setIsLoading(true));
-      const response = await DictionaryItemPageHttp.getDictionaryItemPageItems(dictionaryId);
-      console.log(response, 'itemssss');
+      const response = await DictionaryItemPageHttp.getDictionaryItemPageItems(dictionaryId, pageIndex, pageSize);
 
-      dispatch(setItems(response.data.items));
+      const { items, ...meta } = response.data;
+      dispatch(setItems(items));
+      dispatch(setMeta(meta));
     } catch (err: any) {
       dispatch(setError(err.message));
     } finally {

@@ -89,15 +89,22 @@ const BASE_URL = 'api/v1/Dictionaries';
 export class DictionaryItemPageHttp {
   static async getDictionaryItemPage(dictionaryId: any): Promise<AxiosResponse<IDictionaryItemPage>> {
     const response: AxiosResponse<IDictionaryItemPage> = await axiosInstance.get(`${BASE_URL}/${dictionaryId}`, {});
-    console.log('ddddd');
-
     return response;
   }
 
-  static async getDictionaryItemPageItems(dictionaryId: any): Promise<AxiosResponse<IDictionaryItemPageItems>> {
+  static async getDictionaryItemPageItems(
+    dictionaryId: any,
+    pageIndex: number,
+    pageSize: number
+  ): Promise<AxiosResponse<IDictionaryItemPageItems>> {
     const response: AxiosResponse<IDictionaryItemPageItems> = await axiosInstance.get(
       `${BASE_URL}/${dictionaryId}/items`,
-      {}
+      {
+        params: {
+          pageIndex,
+          pageSize,
+        },
+      }
     );
     return response;
   }
